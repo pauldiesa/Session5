@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace BankingApp
 {
     /// <summary>
@@ -24,6 +25,7 @@ namespace BankingApp
         decimal cInvestmentBalance = 3138.78m;
         decimal amountTransfer = 0.0m;
         decimal fromBalance = 4346.37m, toBalance = 1386.37m;
+        decimal mychecque = 2.00m;
 
         // use this two variables to keep track which radio button has clicked
         string fromRadioButtonChecked = "SavingsRadioButtonOn";
@@ -86,7 +88,9 @@ namespace BankingApp
             }
             else
             // Handle insufficient fund
-                if (amountTransfer > fromBalance)
+                if (((fromRadioButtonChecked == "ChecqueButtonOn") && (amountTransfer + 2.0m > fromBalance)) ||
+                ((fromRadioButtonChecked == "SavingRadioButtonOn") && (amountTransfer > fromBalance))) 
+                ////(amountTransfer > fromBalance)
                 {
                     MessageBox.Show("Error! You have insufficient fund. Enter another amount");
                     Keyboard.Focus(amountTextBox);
@@ -133,7 +137,7 @@ namespace BankingApp
                             break;
 
                         case "ChequeRadioButtonOn&SavingsRadioButtonOn":  // from Cheque to Savings
-                            fromBalance = fromBalance - amountTransfer;
+                            fromBalance = fromBalance - amountTransfer-mychecque;
                             cChequeBalance = fromBalance;
                             fromBalanceLabel.Content = cChequeBalance.ToString("C");
 
